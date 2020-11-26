@@ -15,7 +15,7 @@ class Item(Resource):
         if item:
             return item.json()
         else:
-            return {'message': f'Item {item} not found'}, 404
+            return {'message': f'Item {name} not found'}, 404
 
     def post(self, name):
         if ItemModel.find_by_name(name):
