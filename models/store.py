@@ -8,12 +8,13 @@ class StoreModel(db.Model):
     name = db.Column(db.String(80))
 
     items = db.relationship('ItemModel', lazy='dynamic')
+    employees = db.relationship('EmployeeModel', lazy='dynamic')
 
     def __init__(self, name):
         self.name = name
 
     def json(self):
-        return {'id': self.id ,'name': self.name, 'items': [item.json() for item in self.items.all()]}
+        return {'id': self.id, 'name': self.name, 'items': [item.json() for item in self.items.all()]}
 
     @classmethod
     def find_by_name(cls, name):
@@ -30,4 +31,3 @@ class StoreModel(db.Model):
     def delete_from_db(self):
         db.session.delete(self)
         db.session.commit()
-
