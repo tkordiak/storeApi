@@ -42,11 +42,6 @@ class Employee(Resource):
 
         return employee.json()
 
-
-
-
-
-
     def delete(self, name):
         if not EmployeeModel.find_by_name(name):
             return {'message': f'Employee {name} does not exists'}
@@ -54,3 +49,8 @@ class Employee(Resource):
         employee = EmployeeModel.find_by_name(name)
         employee.delete_from_db()
         return {'message': f'Employee {name} deleted'}
+
+
+class EmployeeList(Resource):
+    def get(self):
+        return {'employees': [employee.json() for employee in EmployeeModel.query.all()]}
