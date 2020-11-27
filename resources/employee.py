@@ -28,6 +28,25 @@ class Employee(Resource):
 
         return employee.json(), 201
 
+    def put(self, name):
+        data = Employee.parser.parse_args()
+        employee = EmployeeModel.find_by_name(name)
+
+        if not employee:
+            employee = EmployeeModel(name, **data)
+        else:
+            employee.role = data['role']
+            employee.email = data['email']
+            employee.store_id = data['store_id']
+        employee.save_to_db()
+
+        return employee.json()
+
+
+
+
+
+
     def delete(self, name):
         if not EmployeeModel.find_by_name(name):
             return {'message': f'Employee {name} does not exists'}
